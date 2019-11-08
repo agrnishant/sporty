@@ -1,0 +1,11 @@
+.card{
+    margin-bottom: 30px;
+}
+/* The margin-bottom helps the cards to separate from each other */
+.card-footer{
+    padding: 0;
+}
+.sticky-top{
+    top: 80px;
+}
+/* The sticky-top settings will keep the bootstrap class stick to the top without hiding even a bit*/

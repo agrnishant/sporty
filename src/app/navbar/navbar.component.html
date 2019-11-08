@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <div class="container">
+            <a class="navbar-brand" style="color:purple" routerLink="/home">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+            </a>
+            <div id="navbarsExampleDefault">
+                <button class="navbar-brand" style="color: brown" 
+                    routerLink="/shopping-cart">
+                    <span class="badge badge-warning"> 
+                        {{getTotalCartQuantity()}}
+                    </span>
+                    <mat-icon aria-label="Example shopping Cart icon">add_shopping_cart</mat-icon>
+                </button>
+                <ng-template #anonymousUser>
+                    <button *ngIf="!(user$ | async)" class="btn btn-primary d-inline-block" (click)="login()">
+                        Login with Google
+                    </button>
+                </ng-template> <!-- This template will display as an else block if user is not logged in-->
+                <ul *ngIf="user$ | async as user; else anonymousUser" ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{user.displayName}}</button>
+                    <li ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem routerLink="/my/orders">My Orders</button>
+                      <button ngbDropdownItem routerLink="/check-out">Check-out</button>
+                        <ng-container *ngIf="Admin">
+                        <button ngbDropdownItem routerLink="/admin/orders">Manage Orders</button>
+                        <button ngbDropdownItem routerLink="/admin/products">Manage Products</button>
+                        </ng-container>
+                    <button ngbDropdownItem routerLink="/" (click)="logout()">Logout</button>
+                    </li>
+                </ul>
+              <!--/ul -->
+            </div>        
+    </div>
+</nav>

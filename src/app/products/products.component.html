@@ -1,0 +1,59 @@
+<p>
+<input #query (keyup)="filter(query.value)" 
+    placeholder= "Search..." type="text"  class="form-control" />
+</p>
+<div class="row">
+    <div class="col-3">
+        <div class="list-group sticky-top">
+            <a class="list-group-item list-group-item-action"
+                routerLink = '/'
+                [class.active] = "!cat"
+                (click)="listProductsInThisCategory('')">
+                All Categories
+            </a>
+            <a class="list-group-item list-group-item-action" 
+                *ngFor="let c of getCategories()"
+                routerLink = '/'
+                [queryParams]= "{category: c.name, key: c.key }"
+                [class.active] = "cat === c.name"
+                (click)="listProductsInThisCategory(c.name)">
+                {{ c.name }}
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="row">
+            <ng-container *ngFor= "let p of getProducts(); let i = index">
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" [src]="p.imageUrl" *ngIf="p.imageUrl" 
+                            alt= "Card image" style="width: 20rem; height: 20rem;">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ p.title }}</h4>
+                            <p class="card-text">{{ p.price | currency }}</p>
+                        </div>
+                        <div class="card-footer"> <!-- added the card footer -->
+                            <button *ngIf= "getQuantity(p) <= 0; else updateQuantity" 
+                             class="btn btn-secondary btn-block" (click)="addToCart(p)">Add to Cart</button>
+                             <ng-template #updateQuantity>
+                                <div class="row no-gutters">
+                                    <div class="col-2">
+                                        <button class="btn btn-secondary btn-block"
+                                        (click)="removeFromCart(p)"> - </button>        
+                                    </div>
+                                    <div class="col text-center"> {{getQuantity(p)}} in cart </div>
+                                    <div class="col-2">
+                                        <button class="btn btn-secondary btn-block" 
+                                        (click)="addToCart(p)"> + </button>
+                                    </div>
+                                </div>
+                             </ng-template>
+                        </div> 
+                        <div >  </div>
+                    </div>
+                </div>
+                <div *ngIf="(i+1)%2 === 0" class="w-100"> </div> 
+            </ng-container>
+        </div>                    
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<p>
+  <button class="btn btn-primary" routerLink="/admin/products/new">New Product</button>
+</p>
+<p>
+  <input #query (keyup)="filter(query.value)" 
+    placeholder= "Search..." type="text"  class="form-control" />
+</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!--tr *ngFor= "let p of products$ | async " -->
+    <tr *ngFor= "let p of getProducts()"> <!-- This method works correctly to fetch key-->
+      <td> {{p.title}} </td>
+      <td> {{p.price}} </td>
+      <td> {{p.key}} </td>
+      <td> <a  [routerLink]="['/admin/products', p.key]">Edit</a> </td>
+      <!-- since we want the routerLink to be dynamic, we want it to be linked through
+        property binding syntax -->
+    </tr>
+  </tbody>
+</table>
+<!--div *ngFor="let customer of customers" style="width: 300px;">
+    <app-customer-details [customer]='customer'></app-customer-details>
+</div -->
+<!--p>
+    <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+  </p>
+  <p>
+    <input 
+      #query
+      (keyup)="filter(query.value)"
+      type="text" class="form-control" placeholder="Search...">
+  </p>
+  
+  <data-table
+    [items]="items"
+    [itemCount]="itemCount"
+    (reload)="reloadItems($event)">
+    <data-table-column
+      [property]="'title'"  
+      [header]="'Title'"
+      [sortable]="true"
+      [resizable]="true"
+    >
+    </data-table-column>
+    
+    <data-table-column
+      [property]="'price'"  
+      [header]="'Price'"
+      [sortable]="true"
+      [resizable]="true"
+    >
+      <ng-template #dataTableCell let-item="item">
+        {{ item.price | currency:'USD':true }}
+      </ng-template>
+    </data-table-column>
+  
+    <data-table-column
+      [property]="'$key'"  
+    >
+      <ng-template #dataTableCell let-item="item">
+        <a [routerLink]="['/admin/products/', item.$key]">Edit</a>
+      </ng-template>
+    </data-table-column>
+  
+  </data-table -->
+  
+  
